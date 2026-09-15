@@ -215,11 +215,11 @@ function renderProjects(filterCategory) {
       <div class="project-actions">
         <button class="btn btn-secondary btn-sm open-details-btn" data-id="${project.id}">
           <i class="ph ph-file-text"></i>
-          Architecture & Details
+          Architecture
         </button>
         <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" aria-label="View ${project.title} on GitHub">
           <i class="ph ph-github-logo"></i>
-          GitHub Code
+          GitHub
         </a>
       </div>
     </article>

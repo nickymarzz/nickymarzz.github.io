@@ -592,7 +592,7 @@ button {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
 }
 
@@ -600,9 +600,11 @@ button {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 1.75rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
   transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
   box-shadow: var(--card-shadow);
 }
@@ -677,10 +679,19 @@ button {
 }
 
 .project-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 0.65rem;
   padding-top: 1rem;
   border-top: 1px solid var(--border-subtle);
+  width: 100%;
+}
+
+.project-actions .btn {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.825rem;
+  justify-content: center;
 }
 
 /* ==========================================================================
