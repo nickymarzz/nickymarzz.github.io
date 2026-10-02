@@ -217,6 +217,76 @@ const portfolioData = {
         "Algorithmic digital signal processing implementations"
       ],
       metric: "Enhanced image SNR using edge-preserving noise reduction"
+    },
+    {
+      id: "dsp-project",
+      category: "data",
+      categoryName: "Data & Analytics",
+      title: "Digital Signal Processing Project",
+      tagline: "Noise filtering, FFT, down sampling, and spectrograms in MATLAB",
+      badge: "MATLAB / DSP",
+      description: "A comprehensive digital signal processing suite covering frequency analysis, noise reduction, and spectral visualization.",
+      problem: "Analyzing complex frequency domains requires robust mathematical modeling and spectral analysis tools.",
+      solution: "Implemented Fast Fourier Transforms, downsampling algorithms, and filtering techniques.",
+      metric: "Processed high-fidelity spectral analysis with 0% data loss",
+      tech: ["MATLAB", "Signal Processing", "FFT", "Data Analysis"],
+      github: "https://github.com/nickymarzz/Digital-Signal-Processing-Project"
+    },
+    {
+      id: "retro-java-game",
+      category: "backend",
+      categoryName: "Backend & Systems",
+      title: "Java Retro Game Engine",
+      tagline: "Intuitive Java-based retro game project",
+      badge: "Java / Game Dev",
+      description: "A custom 2D retro game developed from scratch using Java's core graphics and event-driven architecture.",
+      problem: "Building a performant game loop in standard Java requires strict resource management and thread handling.",
+      solution: "Developed a custom game engine with optimized rendering cycles and responsive keyboard event listeners.",
+      metric: "Maintained a stable 60 FPS rendering cycle",
+      tech: ["Java", "OOP", "Game Engine", "Event Listeners"],
+      github: "https://github.com/nickymarzz/javaproject"
+    },
+    {
+      id: "keris2026-dev",
+      category: "backend",
+      categoryName: "Backend & Full-Stack",
+      title: "KERIS Website Development",
+      tagline: "Development build for the next-generation KERIS platform",
+      badge: "Web Application",
+      description: "A development repository for constructing the frontend interface and responsive architecture of the KERIS website.",
+      problem: "Iterative UI/UX prototyping required a separate, safe development environment for component testing.",
+      solution: "Utilized modern JavaScript and modular component structures to test and refine application layouts.",
+      metric: "Accelerated component testing iteration cycles by 50%",
+      tech: ["JavaScript", "HTML", "CSS", "Frontend Development"],
+      github: "https://github.com/nickymarzz/keris2026-dev"
+    },
+    {
+      id: "spm-quiz-system",
+      category: "backend",
+      categoryName: "Backend & Full-Stack",
+      title: "SPM Quiz Management System",
+      tagline: "A web-based quiz management system for SPM Computer Science education",
+      badge: "PHP / SQL",
+      description: "An educational platform designed to administer, grade, and track quiz performance for computer science students.",
+      problem: "Manual grading of computer science quizzes is inefficient and provides delayed feedback to students.",
+      solution: "Built a dynamic PHP backend connected to a relational database to automate quiz delivery and score calculation.",
+      metric: "Automated grading for 100% of student quiz submissions",
+      tech: ["PHP", "SQL", "JavaScript", "Educational Tech"],
+      github: "https://github.com/nickymarzz/Project-Sains-Komputer-SPM"
+    },
+    {
+      id: "wp-recipe-app",
+      category: "backend",
+      categoryName: "Backend & Full-Stack",
+      title: "WorldPlate Web Client",
+      tagline: "Frontend interface for the WorldPlate Database Project",
+      badge: "Frontend Web",
+      description: "The static client-side interface built for the 3rd-year database project, acting as the presentation layer for culinary queries.",
+      problem: "Complex database relationships require an intuitive, accessible frontend for end-users to query recipes.",
+      solution: "Designed a clean, responsive HTML/CSS interface mapping directly to backend API endpoints.",
+      metric: "Delivered a responsive UI scaling seamlessly across 3 breakpoints",
+      tech: ["HTML", "CSS", "UI/UX", "Frontend"],
+      github: "https://github.com/nickymarzz/WPrecipeapp"
     }
   ]
 };
@@ -909,107 +979,7 @@ function initWireframeCanvas() {
     ctx.beginPath();
     edges.forEach(edge => {
       const p1 = projected[edge[0]];
-      const p2 = projected[edge[1],
-    {
-  id: "dsp-project",
-  category: "data",
-  categoryName: "Data & Analytics",
-  title: "Digital Signal Processing Project",
-  tagline: "Noise filtering, FFT, down sampling, and spectrograms in MATLAB",
-  badge: "MATLAB / DSP",
-  description: "A comprehensive digital signal processing suite covering frequency analysis, noise reduction, and spectral visualization.",
-  problem: "Analyzing complex frequency domains requires robust mathematical modeling and spectral analysis tools.",
-  solution: "Implemented Fast Fourier Transforms, downsampling algorithms, and filtering techniques.",
-  metric: "Processed high-fidelity spectral analysis with 0% data loss",
-  tech: [
-    "MATLAB",
-    "Signal Processing",
-    "FFT",
-    "Data Analysis"
-  ],
-  github: "https://github.com/nickymarzz/Digital-Signal-Processing-Project",
-  highlights: []
-},
-    {
-  id: "retro-java-game",
-  category: "backend",
-  categoryName: "Backend & Systems",
-  title: "Java Retro Game Engine",
-  tagline: "Intuitive Java-based retro game project",
-  badge: "Java / Game Dev",
-  description: "A custom 2D retro game developed from scratch using Java's core graphics and event-driven architecture.",
-  problem: "Building a performant game loop in standard Java requires strict resource management and thread handling.",
-  solution: "Developed a custom game engine with optimized rendering cycles and responsive keyboard event listeners.",
-  metric: "Maintained a stable 60 FPS rendering cycle",
-  tech: [
-    "Java",
-    "OOP",
-    "Game Engine",
-    "Event Listeners"
-  ],
-  github: "https://github.com/nickymarzz/javaproject",
-  highlights: []
-},
-    {
-  id: "keris2026-dev",
-  category: "backend",
-  categoryName: "Backend & Full-Stack",
-  title: "KERIS Website Development",
-  tagline: "Development build for the next-generation KERIS platform",
-  badge: "Web Application",
-  description: "A development repository for constructing the frontend interface and responsive architecture of the KERIS website.",
-  problem: "Iterative UI/UX prototyping required a separate, safe development environment for component testing.",
-  solution: "Utilized modern JavaScript and modular component structures to test and refine application layouts.",
-  metric: "Accelerated component testing iteration cycles by 50%",
-  tech: [
-    "JavaScript",
-    "HTML",
-    "CSS",
-    "Frontend Development"
-  ],
-  github: "https://github.com/nickymarzz/keris2026-dev",
-  highlights: []
-},
-    {
-  id: "spm-quiz-system",
-  category: "backend",
-  categoryName: "Backend & Full-Stack",
-  title: "SPM Quiz Management System",
-  tagline: "A web-based quiz management system for SPM Computer Science education",
-  badge: "PHP / SQL",
-  description: "An educational platform designed to administer, grade, and track quiz performance for computer science students.",
-  problem: "Manual grading of computer science quizzes is inefficient and provides delayed feedback to students.",
-  solution: "Built a dynamic PHP backend connected to a relational database to automate quiz delivery and score calculation.",
-  metric: "Automated grading for 100% of student quiz submissions",
-  tech: [
-    "PHP",
-    "SQL",
-    "JavaScript",
-    "Educational Tech"
-  ],
-  github: "https://github.com/nickymarzz/Project-Sains-Komputer-SPM",
-  highlights: []
-},
-    {
-  id: "wp-recipe-app",
-  category: "backend",
-  categoryName: "Backend & Full-Stack",
-  title: "WorldPlate Web Client",
-  tagline: "Frontend interface for the WorldPlate Database Project",
-  badge: "Frontend Web",
-  description: "The static client-side interface built for the 3rd-year database project, acting as the presentation layer for culinary queries.",
-  problem: "Complex database relationships require an intuitive, accessible frontend for end-users to query recipes.",
-  solution: "Designed a clean, responsive HTML/CSS interface mapping directly to backend API endpoints.",
-  metric: "Delivered a responsive UI scaling seamlessly across 3 breakpoints",
-  tech: [
-    "HTML",
-    "CSS",
-    "UI/UX",
-    "Frontend"
-  ],
-  github: "https://github.com/nickymarzz/WPrecipeapp",
-  highlights: []
-}];
+      const p2 = projected[edge[1]];
       if(p1.scale > 0 && p2.scale > 0) {
         ctx.moveTo(p1.x, p1.y);
         ctx.lineTo(p2.x, p2.y);
