@@ -59,6 +59,7 @@
           <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
         <div class="nav-active-indicator"></div>
+        <div class="nav-hint hide-on-touch">[ / ] jump</div>
       </nav>
 
       <div class="nav-actions">
@@ -74,6 +75,7 @@
     <!-- Hero Section -->
     <section class="hero-section" id="hero">
       <canvas id="hero-canvas"></canvas>
+      <canvas id="wireframe-canvas"></canvas>
       <div class="container hero-grid">
         <div class="hero-content hud-bracket">
           <div class="status-badge cyberpunk-badge">
@@ -419,6 +421,21 @@
 
   <!-- Toast Notification Container -->
   <div id="toast-notification" class="toast-notification cyber-toast"></div>
+
+  <!-- Command Palette Modal -->
+  <div class="modal-overlay" id="cmd-palette-overlay" role="dialog" aria-modal="true" aria-labelledby="cmd-palette-title">
+    <div class="modal-backdrop" id="cmd-palette-backdrop"></div>
+    <div class="modal-box cyber-modal cmd-palette-box">
+      <div class="modal-borders"></div>
+      <h2 id="cmd-palette-title" class="sr-only" style="display:none;">Command Palette</h2>
+      <div class="cmd-palette-input-wrapper">
+        <span class="prompt">&gt;</span>
+        <input type="text" id="cmd-palette-input" placeholder="Type a command..." autocomplete="off">
+      </div>
+      <ul id="cmd-palette-list" class="cmd-palette-list">
+      </ul>
+    </div>
+  </div>
 
   <!-- Main JavaScript File -->
   <script src="js/main.js?v=3"></script>

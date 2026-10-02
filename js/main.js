@@ -222,6 +222,11 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollReveal();
   initCustomCursor();
   initHeroCanvas();
+  
+  // Enhancements
+  initKonamiCode();
+  initCommandPalette();
+  initWireframeCanvas();
 });
 
 /* ==========================================================================
@@ -657,4 +662,253 @@ function initHeroCanvas() {
   }
 
   requestAnimationFrame(draw);
+}
+
+/* ==========================================================================
+   Konami Code Easter Egg
+   ========================================================================== */
+function initKonamiCode() {
+  const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  let konamiIndex = 0;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === konamiCode[konamiIndex] || e.key.toLowerCase() === konamiCode[konamiIndex]) {
+      konamiIndex++;
+      if (konamiIndex === konamiCode.length) {
+        document.documentElement.classList.toggle('magenta-mode');
+        showToast('> override accepted: palette inverted');
+        
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReduced) {
+          document.body.style.animation = 'textGlitch 0.3s steps(2) 2';
+          setTimeout(() => { document.body.style.animation = ''; }, 600);
+        }
+        konamiIndex = 0;
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
+}
+
+/* ==========================================================================
+   Command Palette Section Jumper
+   ========================================================================== */
+function initCommandPalette() {
+  const overlay = document.getElementById('cmd-palette-overlay');
+  const input = document.getElementById('cmd-palette-input');
+  const list = document.getElementById('cmd-palette-list');
+  if (!overlay || !input || !list) return;
+
+  const sections = [
+    { name: 'Overview', id: 'overview', type: 'section' },
+    { name: 'Skills', id: 'skills', type: 'section' },
+    { name: 'Projects', id: 'projects', type: 'section' },
+    { name: 'Education', id: 'education', type: 'section' },
+    { name: 'Contact', id: 'contact', type: 'section' },
+    { name: 'Copy Email', action: 'copy-email', type: 'action' },
+    { name: 'GitHub', url: 'https://github.com/nickymarzz', type: 'link' }
+  ];
+
+  let activeIndex = 0;
+  let filtered = [...sections];
+
+  function renderList() {
+    list.innerHTML = filtered.map((s, i) => 
+      `<li class="${i === activeIndex ? 'active' : ''}" data-index="${i}">${s.name}</li>`
+    ).join('');
+    
+    // Ensure active item is in view
+    const activeEl = list.querySelector('.active');
+    if (activeEl) {
+      activeEl.scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  function executeAction(item) {
+    closePalette();
+    if (item.type === 'section') {
+      const el = document.getElementById(item.id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else if (item.type === 'action' && item.action === 'copy-email') {
+      document.querySelector('.copy-email-btn')?.click();
+    } else if (item.type === 'link') {
+      window.open(item.url, '_blank');
+    }
+  }
+
+  function openPalette() {
+    overlay.classList.add('active');
+    input.value = '';
+    filtered = [...sections];
+    activeIndex = 0;
+    renderList();
+    setTimeout(() => input.focus(), 100);
+  }
+
+  function closePalette() {
+    overlay.classList.remove('active');
+    input.blur();
+  }
+
+  document.addEventListener('keydown', (e) => {
+    // Open palette on '/' if not in an input/textarea
+    if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+      e.preventDefault();
+      openPalette();
+    }
+    // Close on Escape
+    else if (e.key === 'Escape' && overlay.classList.contains('active')) {
+      closePalette();
+    }
+  });
+
+  input.addEventListener('input', (e) => {
+    const val = e.target.value.toLowerCase();
+    filtered = sections.filter(s => s.name.toLowerCase().includes(val));
+    activeIndex = 0;
+    renderList();
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (!overlay.classList.contains('active') || filtered.length === 0) return;
+    
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      activeIndex = (activeIndex + 1) % filtered.length;
+      renderList();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      activeIndex = (activeIndex - 1 + filtered.length) % filtered.length;
+      renderList();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      executeAction(filtered[activeIndex]);
+    }
+  });
+
+  list.addEventListener('click', (e) => {
+    const li = e.target.closest('li');
+    if (li) {
+      const idx = parseInt(li.getAttribute('data-index'), 10);
+      executeAction(filtered[idx]);
+    }
+  });
+  
+  // Close when clicking outside
+  document.getElementById('cmd-palette-backdrop')?.addEventListener('click', closePalette);
+}
+
+/* ==========================================================================
+   Hero Wireframe Canvas (Tiny 2D)
+   ========================================================================== */
+function initWireframeCanvas() {
+  const canvas = document.getElementById('wireframe-canvas');
+  if (!canvas) return;
+  
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReduced || window.innerWidth < 768) {
+    canvas.style.display = 'none';
+    return;
+  }
+
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  function resize() {
+    width = canvas.width = canvas.parentElement.offsetWidth;
+    height = canvas.height = canvas.parentElement.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // Basic 3D setup
+  let vertices = [];
+  let edges = [];
+  
+  // Generate a simple torus-like shape
+  const R = 150; // Major radius
+  const r = 50;  // Minor radius
+  const segments = 12;
+  const rings = 12;
+  
+  for(let i=0; i<rings; i++) {
+    const theta = i * Math.PI * 2 / rings;
+    for(let j=0; j<segments; j++) {
+      const phi = j * Math.PI * 2 / segments;
+      const x = (R + r * Math.cos(phi)) * Math.cos(theta);
+      const y = (R + r * Math.cos(phi)) * Math.sin(theta);
+      const z = r * Math.sin(phi);
+      vertices.push({x, y, z});
+      
+      // Add edges
+      const curr = i * segments + j;
+      const nextJ = i * segments + ((j+1) % segments);
+      const nextI = ((i+1) % rings) * segments + j;
+      edges.push([curr, nextJ]);
+      edges.push([curr, nextI]);
+    }
+  }
+
+  let angleX = 0;
+  let angleY = 0;
+  let isVisible = true;
+  let animationFrameId;
+
+  const observer = new IntersectionObserver((entries) => {
+    isVisible = entries[0].isIntersecting;
+  });
+  observer.observe(canvas.parentElement);
+  
+  document.addEventListener("visibilitychange", () => {
+    isVisible = !document.hidden && canvas.parentElement.getBoundingClientRect().top < window.innerHeight;
+  });
+
+  function draw() {
+    animationFrameId = requestAnimationFrame(draw);
+    if (!isVisible) return;
+    
+    ctx.clearRect(0, 0, width, height);
+    
+    // Position it slightly off-center to the right, behind hero text
+    const cx = width * 0.7;
+    const cy = height * 0.5;
+    
+    angleX += 0.005;
+    angleY += 0.007;
+    
+    const cosX = Math.cos(angleX), sinX = Math.sin(angleX);
+    const cosY = Math.cos(angleY), sinY = Math.sin(angleY);
+
+    // Project points
+    const projected = vertices.map(v => {
+      // Rotate Y
+      let x = v.x * cosY - v.z * sinY;
+      let z = v.x * sinY + v.z * cosY;
+      // Rotate X
+      let y = v.y * cosX - z * sinX;
+      z = v.y * sinX + z * cosX;
+      
+      const scale = 500 / (500 + z); // Perspective
+      return {
+        x: cx + x * scale,
+        y: cy + y * scale,
+        scale: scale
+      };
+    });
+
+    ctx.strokeStyle = 'rgba(0, 240, 255, 0.15)'; // Cyan with low opacity
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    edges.forEach(edge => {
+      const p1 = projected[edge[0]];
+      const p2 = projected[edge[1]];
+      if(p1.scale > 0 && p2.scale > 0) {
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+      }
+    });
+    ctx.stroke();
+  }
+  
+  draw();
 }
