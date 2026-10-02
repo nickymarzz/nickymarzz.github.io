@@ -13,16 +13,27 @@
 
   <!-- Open Graph / Facebook / LinkedIn -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nickymarzz.github.io/">
   <meta property="og:title" content="Nick (nickymarzz) - Software Developer Portfolio">
   <meta property="og:description" content="Software developer with hands-on project experience in AI, data analytics, databases, and full-stack development.">
-  <meta property="og:image" content="https://avatars.githubusercontent.com/u/207737430?v=4">
+  <meta property="og:image" content="https://nickymarzz.github.io/og-banner.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nickymarzz.github.io/">
+  <meta name="twitter:title" content="Nick (nickymarzz) - Software Developer Portfolio">
+  <meta name="twitter:description" content="Software developer with hands-on project experience in AI, data analytics, databases, and full-stack development.">
+  <meta name="twitter:image" content="https://nickymarzz.github.io/og-banner.png">
+
+  <!-- Favicon & Theme -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%2300f0ff'>N</text></svg>">
+  <meta name="theme-color" content="#0a0a12">
+  <link rel="canonical" href="https://nickymarzz.github.io/">
 
   <!-- Google Fonts: Orbitron & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
 
   <!-- Phosphor Icons -->
@@ -32,6 +43,7 @@
   <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body class="cyberpunk-theme">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <div class="crt-overlay"></div>
   <div id="custom-cursor" class="neon-cursor"></div>
@@ -41,7 +53,7 @@
     <div class="container nav-container">
       <a href="#hero" class="brand" aria-label="Home">
         <div class="avatar-frame-sm">
-          <img src="https://avatars.githubusercontent.com/u/207737430?v=4" alt="Nick avatar" class="brand-avatar" />
+          <img src="https://avatars.githubusercontent.com/u/207737430?v=4" alt="Nick avatar" class="brand-avatar" width="40" height="40" />
           <div class="scanline-sm"></div>
         </div>
         <div class="brand-text">
@@ -63,6 +75,10 @@
       </nav>
 
       <div class="nav-actions">
+        <a href="resume.pdf" class="btn btn-neon btn-sm" download>
+          <i class="ph ph-download-simple"></i>
+          Resume
+        </a>
         <a href="#contact" class="btn btn-neon btn-sm">
           <i class="ph ph-terminal-window"></i>
           Hire Me
@@ -71,7 +87,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- Hero Section -->
     <section class="hero-section" id="hero">
       <canvas id="hero-canvas"></canvas>
@@ -93,6 +109,8 @@
 
           <p class="hero-lead reveal-text">
             Software developer with hands-on experience in machine learning pipelines, Databricks analytics, relational database modeling, and full-stack web applications. Dedicated to clear architecture and reliable production code.
+            <br><br>
+            <span class="currently-building">> Currently building: <span class="metric-placeholder">[add current project]</span><span class="blink">_</span></span>
           </p>
 
           <div class="hero-actions reveal-fade">
@@ -129,7 +147,7 @@
 
         <div class="hero-portrait reveal-fade">
           <div class="portrait-frame cyberpunk-frame">
-            <img src="https://avatars.githubusercontent.com/u/207737430?v=4" alt="Nick - Software Developer" class="portrait-img" />
+            <img src="https://avatars.githubusercontent.com/u/207737430?v=4" alt="Nick - Software Developer" class="portrait-img" width="250" height="250" loading="lazy" />
             <div class="scanline"></div>
             <div class="frame-corners"></div>
           </div>
@@ -367,6 +385,10 @@
             </p>
 
             <div class="contact-buttons-row">
+              <a href="resume.pdf" class="btn btn-neon" download>
+                <i class="ph ph-download-simple"></i>
+                Download Resume
+              </a>
               <a href="mailto:nickymarzz.dev@gmail.com" class="btn btn-primary-cyber">
                 <i class="ph ph-envelope-simple"></i>
                 Send Email

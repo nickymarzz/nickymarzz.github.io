@@ -349,23 +349,20 @@ function renderProjects(filterCategory) {
         </div>
 
         <h3 class="project-title glitch-text" data-text="${project.title}">${project.title}</h3>
-        <p class="project-tagline">> ${project.tagline}</p>
-
-        <p class="project-desc">${project.description}</p>
+        
+        <div class="project-details">
+          <p><strong>&gt; problem:</strong> ${project.problem}</p>
+          <p><strong>&gt; built:</strong> ${project.solution}</p>
+          <p><strong>&gt; result:</strong> <span class="metric-placeholder">[add metric]</span></p>
+        </div>
 
         <div class="project-tech-stack">
           ${project.tech.map(t => `<span class="tech-pill outlined">${t}</span>`).join("")}
         </div>
 
         <div class="project-actions">
-          <button class="btn btn-outline-cyber btn-sm open-details-btn" data-id="${project.id}">
-            <i class="ph ph-terminal"></i>
-            Run Details
-          </button>
-          <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary-cyber btn-sm" aria-label="View ${project.title} on GitHub">
-            <i class="ph ph-github-logo"></i>
-            Source
-          </a>
+          ${project.demo ? `<a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="btn btn-primary-cyber btn-sm"><i class="ph ph-browser"></i> Live Demo</a>` : ''}
+          ${project.github ? `<a href="${project.github}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary-cyber btn-sm"><i class="ph ph-github-logo"></i> Source</a>` : ''}
         </div>
       </article>
     `).join("");
