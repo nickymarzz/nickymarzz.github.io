@@ -142,6 +142,78 @@ const portfolioData = {
         "Modular Python backend architecture with Flask routing",
         "Clean, responsive GUI for testing and inspection"
       ]
+    },
+    {
+      id: "studyflow-app",
+      category: "backend",
+      categoryName: "Backend & Full-Stack",
+      title: "StudyFlow Task Management",
+      tagline: "Lightweight, open-source task and project management tool designed for university students",
+      badge: "MERN Stack",
+      description: "A robust task and project management platform built to help students and academic teams organize their workflows, featuring real-time updates and task tracking.",
+      problem: "University students often struggle with tracking assignments across multiple courses using fragmented tools.",
+      solution: "Developed a centralized, open-source management platform using the MERN stack to streamline academic project workflows.",
+      tech: ["MongoDB", "Express", "React", "Node.js", "JavaScript"],
+      github: "https://github.com/nickymarzz/studyflow-app",
+      highlights: [
+        "Full-stack MERN architecture for scalable state management",
+        "Open-source academic tool optimized for student workflows",
+        "Real-time task tracking and organizational tools"
+      ]
+    },
+    {
+      id: "kerisfullstack-rework",
+      category: "backend",
+      categoryName: "Backend & Full-Stack",
+      title: "KERIS Fullstack Platform",
+      tagline: "Modern web application rework built with the MERN stack",
+      badge: "Web Application",
+      description: "A full-stack website rework for KERIS, upgrading previous infrastructure to a modern JavaScript ecosystem to improve performance and user experience.",
+      problem: "Legacy web infrastructure lacked the responsiveness and dynamic data management required by modern users.",
+      solution: "Re-engineered the platform from the ground up using MongoDB, Express, React, and Node.js for a cohesive full-stack experience.",
+      tech: ["MongoDB", "Express", "React", "Node.js", "JavaScript"],
+      github: "https://github.com/nickymarzz/kerisfullstack-rework",
+      highlights: [
+        "Complete platform rework using modern JavaScript frameworks",
+        "Responsive React frontend connected to an Express backend",
+        "Dynamic data management with MongoDB"
+      ]
+    },
+    {
+      id: "bank-management-system",
+      category: "backend",
+      categoryName: "Backend & Systems",
+      title: "Bank Management System",
+      tagline: "Efficient Java-based application for secure financial transactions and account management",
+      badge: "Java / Systems",
+      description: "A robust financial system built in Java that handles core banking operations including account creation, deposits, withdrawals, and balance inquiries with secure state management.",
+      problem: "Financial operations require strict data consistency, encapsulation, and error handling to prevent transaction anomalies.",
+      solution: "Implemented an object-oriented Java application utilizing strict access controls, transaction validation, and comprehensive error handling.",
+      tech: ["Java", "OOP", "Systems Engineering"],
+      github: "https://github.com/nickymarzz/Bank-Management-System",
+      highlights: [
+        "Object-oriented design principles ensuring data encapsulation",
+        "Robust transaction validation and error handling",
+        "Efficient state management for financial accounts"
+      ]
+    },
+    {
+      id: "image-processing-project",
+      category: "ai",
+      categoryName: "AI & Computer Vision",
+      title: "Digital Image Processing Pipeline",
+      tagline: "Bilateral filtering for denoising and bicubic interpolation for image scaling",
+      badge: "Image Processing",
+      description: "A comprehensive digital signal and image processing project focused on algorithmic transformations to enhance image quality, including noise reduction and high-quality upscaling.",
+      problem: "Raw images often suffer from noise and pixelation when scaled, requiring mathematical models for correction.",
+      solution: "Developed custom pipelines using Jupyter and MATLAB to apply bilateral filtering for edge-preserving denoising and bicubic interpolation for smooth scaling.",
+      tech: ["Jupyter", "MATLAB", "Python", "Computer Vision", "Signal Processing"],
+      github: "https://github.com/nickymarzz/Image-Processing-Project",
+      highlights: [
+        "Edge-preserving noise reduction via bilateral filtering",
+        "High-fidelity image scaling using bicubic interpolation",
+        "Algorithmic digital signal processing implementations"
+      ]
     }
   ]
 };
