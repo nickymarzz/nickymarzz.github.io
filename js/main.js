@@ -1,20 +1,12 @@
 /**
  * Portfolio Interactive Logic & Recruiter Experience
- * Nick (nickymarzz) - Software Developer | AI | Data
+ * Cyberpunk Redesign
  */
 
 const portfolioData = {
   profile: {
-    name: "Nick",
-    handle: "nickymarzz",
-    role: "Software Developer",
-    focus: "AI Systems • Data Pipelines • Backend Engineering",
-    location: "Seoul, South Korea",
-    education: "Sejong University",
-    status: "Open to Full-Time & Internship Opportunities",
-    email: "nickymarzz.dev@gmail.com", // Recruiter direct email (easily customizable)
-    github: "https://github.com/nickymarzz",
-    linkedin: "https://linkedin.com/in/nickymarzz",
+    email: "nickymarzz.dev@gmail.com",
+    github: "https://github.com/nickymarzz"
   },
   projects: [
     {
@@ -219,42 +211,113 @@ const portfolioData = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  initTheme();
+  initHeroBootSequence();
+  initGlitchOnLoad();
+  initCounters();
   renderProjects("all");
   initFilters();
   initModal();
   initClipboard();
   initNavScroll();
+  initScrollReveal();
+  initCustomCursor();
+  initHeroCanvas();
 });
 
 /* ==========================================================================
-   Theme Switcher (Dark / Light)
+   Hero Boot Sequence & Glitch
    ========================================================================== */
-function initTheme() {
-  const themeToggle = document.getElementById("theme-toggle");
-  const storedTheme = localStorage.getItem("theme");
-  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+function initHeroBootSequence() {
+  const bootTextEl = document.getElementById("boot-sequence");
+  const mainTitleEl = document.getElementById("main-hero-title");
   
-  const currentTheme = storedTheme || (systemPrefersDark ? "dark" : "light");
-  document.documentElement.setAttribute("data-theme", currentTheme);
-  updateThemeIcon(currentTheme);
-
-  if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      const activeTheme = document.documentElement.getAttribute("data-theme");
-      const newTheme = activeTheme === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", newTheme);
-      localStorage.setItem("theme", newTheme);
-      updateThemeIcon(newTheme);
-    });
+  if (!bootTextEl || !mainTitleEl) return;
+  
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) {
+    bootTextEl.style.display = 'none';
+    mainTitleEl.classList.remove('hidden');
+    return;
   }
+
+  const lines = [
+    "> initializing profile...",
+    "> loading skills modules...",
+    "> status: open to work",
+    "> executing..."
+  ];
+
+  let currentLine = 0;
+  let currentChar = 0;
+  
+  function typeLine() {
+    if (currentLine >= lines.length) {
+      setTimeout(() => {
+        bootTextEl.style.display = 'none';
+        mainTitleEl.classList.remove('hidden');
+      }, 300);
+      return;
+    }
+    
+    if (currentChar < lines[currentLine].length) {
+      bootTextEl.innerHTML = lines.slice(0, currentLine).join('<br>') + 
+        (currentLine > 0 ? '<br>' : '') + 
+        lines[currentLine].substring(0, currentChar + 1) + '<span class="blink">_</span>';
+      currentChar++;
+      setTimeout(typeLine, 30);
+    } else {
+      currentLine++;
+      currentChar = 0;
+      setTimeout(typeLine, 300);
+    }
+  }
+
+  typeLine();
 }
 
-function updateThemeIcon(theme) {
-  const icon = document.querySelector("#theme-toggle i");
-  if (icon) {
-    icon.className = theme === "dark" ? "ph ph-sun" : "ph ph-moon";
-  }
+function initGlitchOnLoad() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  const glitchElements = document.querySelectorAll('.glitch-text');
+  glitchElements.forEach(el => {
+    // Trigger animation manually on load
+    el.style.animation = 'textGlitch 0.3s cubic-bezier(.25, .46, .45, .94) both 3';
+    setTimeout(() => {
+      el.style.animation = ''; // Reset for hover
+    }, 1000);
+  });
+}
+
+/* ==========================================================================
+   Counters (System Readout)
+   ========================================================================== */
+function initCounters() {
+  const counters = document.querySelectorAll('.counter');
+  
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const target = +entry.target.getAttribute('data-target');
+        let count = 0;
+        const inc = target / 30; // speed
+        
+        const updateCount = () => {
+          count += inc;
+          if (count < target) {
+            entry.target.innerText = Math.ceil(count);
+            requestAnimationFrame(updateCount);
+          } else {
+            entry.target.innerText = target;
+          }
+        };
+        updateCount();
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  counters.forEach(counter => observer.observe(counter));
 }
 
 /* ==========================================================================
@@ -264,46 +327,57 @@ function renderProjects(filterCategory) {
   const grid = document.getElementById("projects-grid");
   if (!grid) return;
 
-  const filtered = filterCategory === "all"
-    ? portfolioData.projects
-    : portfolioData.projects.filter(p => p.category === filterCategory);
+  // Simple fade transition logic
+  grid.style.opacity = 0;
+  grid.style.transform = "translateY(10px)";
+  
+  setTimeout(() => {
+    const filtered = filterCategory === "all"
+      ? portfolioData.projects
+      : portfolioData.projects.filter(p => p.category === filterCategory);
 
-  grid.innerHTML = filtered.map(project => `
-    <article class="project-card" data-category="${project.category}">
-      <div class="project-card-header">
-        <span class="project-badge">${project.badge}</span>
-        <span class="project-category-tag">${project.categoryName}</span>
-      </div>
+    grid.innerHTML = filtered.map(project => `
+      <article class="project-card" data-category="${project.category}">
+        <div class="project-card-header">
+          <span class="project-badge">${project.badge}</span>
+          <span class="project-category-tag">[${project.categoryName}]</span>
+        </div>
 
-      <h3 class="project-title">${project.title}</h3>
-      <p class="project-tagline">${project.tagline}</p>
+        <h3 class="project-title glitch-text" data-text="${project.title}">${project.title}</h3>
+        <p class="project-tagline">> ${project.tagline}</p>
 
-      <p class="project-desc">${project.description}</p>
+        <p class="project-desc">${project.description}</p>
 
-      <div class="project-tech-stack">
-        ${project.tech.map(t => `<span class="tech-pill">${t}</span>`).join("")}
-      </div>
+        <div class="project-tech-stack">
+          ${project.tech.map(t => `<span class="tech-pill outlined">${t}</span>`).join("")}
+        </div>
 
-      <div class="project-actions">
-        <button class="btn btn-secondary btn-sm open-details-btn" data-id="${project.id}">
-          <i class="ph ph-file-text"></i>
-          Architecture
-        </button>
-        <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" aria-label="View ${project.title} on GitHub">
-          <i class="ph ph-github-logo"></i>
-          GitHub
-        </a>
-      </div>
-    </article>
-  `).join("");
+        <div class="project-actions">
+          <button class="btn btn-outline-cyber btn-sm open-details-btn" data-id="${project.id}">
+            <i class="ph ph-terminal"></i>
+            Run Details
+          </button>
+          <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary-cyber btn-sm" aria-label="View ${project.title} on GitHub">
+            <i class="ph ph-github-logo"></i>
+            Source
+          </a>
+        </div>
+      </article>
+    `).join("");
 
-  // Attach event listeners to newly rendered detail buttons
-  document.querySelectorAll(".open-details-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.getAttribute("data-id");
-      openProjectModal(projectId);
+    // Attach event listeners to newly rendered detail buttons
+    document.querySelectorAll(".open-details-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const projectId = btn.getAttribute("data-id");
+        openProjectModal(projectId);
+      });
     });
-  });
+
+    // Fade back in
+    grid.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+    grid.style.opacity = 1;
+    grid.style.transform = "translateY(0)";
+  }, 200);
 }
 
 function initFilters() {
@@ -354,42 +428,42 @@ function openProjectModal(projectId) {
   modalBody.innerHTML = `
     <div class="modal-header-meta">
       <span class="project-badge">${project.badge}</span>
-      <span class="project-category-tag">${project.categoryName}</span>
+      <span class="project-category-tag">[${project.categoryName}]</span>
     </div>
-    <h2 class="modal-title">${project.title}</h2>
-    <p class="modal-tagline">${project.tagline}</p>
+    <h2 class="modal-title glitch-text" data-text="${project.title}">${project.title}</h2>
+    <p class="modal-tagline">> ${project.tagline}</p>
 
     <div class="modal-meta-grid">
       <div class="meta-box">
-        <h4><i class="ph ph-warning-circle"></i> The Problem</h4>
+        <h4><i class="ph ph-warning-circle"></i> Error_Log: Problem</h4>
         <p>${project.problem}</p>
       </div>
       <div class="meta-box">
-        <h4><i class="ph ph-check-circle"></i> The Technical Solution</h4>
+        <h4><i class="ph ph-check-circle"></i> Sys_Patch: Solution</h4>
         <p>${project.solution}</p>
       </div>
     </div>
 
     <div class="modal-highlights">
-      <h4><i class="ph ph-sparkle"></i> Key Technical Highlights</h4>
+      <h4><i class="ph ph-sparkle"></i> Execution_Highlights</h4>
       <ul>
         ${project.highlights.map(h => `<li>${h}</li>`).join("")}
       </ul>
     </div>
 
     <div class="modal-tech">
-      <h4>Technologies & Libraries</h4>
+      <h4>Module_Dependencies</h4>
       <div class="project-tech-stack">
-        ${project.tech.map(t => `<span class="tech-pill">${t}</span>`).join("")}
+        ${project.tech.map(t => `<span class="tech-pill outlined">${t}</span>`).join("")}
       </div>
     </div>
 
     <div class="modal-footer-actions">
-      <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+      <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="btn btn-primary-cyber">
         <i class="ph ph-github-logo"></i>
-        Inspect Source Repository
+        Access Source
       </a>
-      <button class="btn btn-secondary" onclick="document.getElementById('modal-close-btn').click()">
+      <button class="btn btn-outline-cyber" onclick="document.getElementById('modal-close-btn').click()">
         Close
       </button>
     </div>
@@ -408,7 +482,15 @@ function initClipboard() {
     btn.addEventListener("click", () => {
       const email = btn.getAttribute("data-email") || portfolioData.profile.email;
       navigator.clipboard.writeText(email).then(() => {
-        showToast(`Copied ${email} to clipboard!`);
+        showToast(`> copied: ${email}`);
+        
+        // Visual feedback on button
+        const textSpan = btn.querySelector('.btn-text');
+        if(textSpan) {
+          const original = textSpan.innerText;
+          textSpan.innerText = "> copied";
+          setTimeout(() => { textSpan.innerText = original; }, 2000);
+        }
       }).catch(() => {
         showToast(`Email: ${email}`);
       });
@@ -418,12 +500,7 @@ function initClipboard() {
 
 function showToast(message) {
   let toast = document.getElementById("toast-notification");
-  if (!toast) {
-    toast = document.createElement("div");
-    toast.id = "toast-notification";
-    toast.className = "toast-notification";
-    document.body.appendChild(toast);
-  }
+  if (!toast) return;
 
   toast.innerHTML = `<i class="ph ph-check"></i> <span>${message}</span>`;
   toast.classList.add("show");
@@ -444,7 +521,7 @@ function initNavScroll() {
     let scrollY = window.pageYOffset;
     sections.forEach(current => {
       const sectionHeight = current.offsetHeight;
-      const sectionTop = current.offsetTop - 120;
+      const sectionTop = current.offsetTop - 150;
       const sectionId = current.getAttribute("id");
 
       if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
@@ -457,4 +534,127 @@ function initNavScroll() {
       }
     });
   });
+}
+
+/* ==========================================================================
+   Scroll Reveals
+   ========================================================================== */
+function initScrollReveal() {
+  const reveals = document.querySelectorAll('.reveal-text, .reveal-fade, .reveal-slide-up');
+  
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+  reveals.forEach(reveal => revealObserver.observe(reveal));
+}
+
+/* ==========================================================================
+   Custom Neon Cursor
+   ========================================================================== */
+function initCustomCursor() {
+  const cursor = document.getElementById('custom-cursor');
+  if(!cursor) return;
+  
+  if (window.matchMedia("(hover: none) and (pointer: coarse)").matches || 
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let cursorX = 0;
+  let cursorY = 0;
+  
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Smooth follow
+  function animateCursor() {
+    // Easing
+    cursorX += (mouseX - cursorX) * 0.2;
+    cursorY += (mouseY - cursorY) * 0.2;
+    
+    cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+    requestAnimationFrame(animateCursor);
+  }
+  requestAnimationFrame(animateCursor);
+
+  // Hover effects
+  const clickables = document.querySelectorAll('a, button, .skill-pill, .project-card, input, textarea');
+  clickables.forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+  });
+}
+
+/* ==========================================================================
+   Hero Canvas (Falling Characters - light version)
+   ========================================================================== */
+function initHeroCanvas() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    canvas.style.display = 'none';
+    return;
+  }
+
+  const ctx = canvas.getContext('2d');
+  
+  let width, height;
+  function resize() {
+    width = canvas.width = canvas.parentElement.offsetWidth;
+    height = canvas.height = canvas.parentElement.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const chars = '01ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
+  const fontSize = 14;
+  let columns = Math.floor(width / fontSize);
+  const drops = [];
+  
+  for(let x = 0; x < columns; x++) {
+    drops[x] = Math.random() * height; // start randomly
+  }
+
+  // Throttle framing
+  let lastTime = 0;
+  const fps = 20; // low fps for performance & aesthetic
+  const interval = 1000/fps;
+
+  function draw(time) {
+    requestAnimationFrame(draw);
+    
+    const dt = time - lastTime;
+    if(dt < interval) return;
+    lastTime = time - (dt % interval);
+
+    // faint trail
+    ctx.fillStyle = 'rgba(10, 10, 18, 0.1)';
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = 'rgba(0, 240, 255, 0.5)';
+    ctx.font = fontSize + 'px monospace';
+
+    for(let i = 0; i < drops.length; i++) {
+      const text = chars.charAt(Math.floor(Math.random() * chars.length));
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      if(drops[i] * fontSize > height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  requestAnimationFrame(draw);
 }
